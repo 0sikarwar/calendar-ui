@@ -1,0 +1,73 @@
+.theme-color {
+    color: #528aea;
+}
+.white-color {
+    color: #fff;
+}
+.header-dark-color {
+    color: #1a2734;
+}
+.blur-dark-color {
+    color: rgba(#1a2734, 0.3);
+}
+.label-color {
+    color: #5c5c7c;
+}
+.table-text-color {
+    color: #333333;
+}
+.header-medium-color {
+    color: #2b3e51;
+}
+.success-color {
+    color: #24a139;
+}
+.caption-color {
+    color: rgba(51, 51, 51, 0.6)
+}
+.error-color {
+    color: #cb0d38;
+}
+.bg-white {
+    background: #fff;
+}
+.bg-success {
+    background: #34c632;
+}
+.bg-error {
+    background: #e15f6f;
+}
+.bg-theme {
+    background: #528aea;
+}
+.bg-theme-light {
+    background: #e1ecff;
+}
+.bg-gray {
+    background: #f4f4f5
+}
+.box-shadow {
+    box-shadow: 0 0 27px 4px rgba(69, 68, 68, 0.07);
+}
+.hover-effect {
+    &:hover {
+        box-shadow: 0 4px 24px 0 rgba(37, 38, 94, 0.1);
+        top: -3px;
+    }
+}
+
+.bg-hover-theme {
+    &:hover {
+        background: rgba(#528aea, 0.4);
+    }
+}
+
+.op-1 {
+    opacity: 0.1;
+}
+.op-2 {
+    opacity: 0.2;
+}
+.op-3 {
+    opacity: 0.3;
+}
