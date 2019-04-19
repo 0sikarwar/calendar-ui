@@ -8,27 +8,47 @@ import {
 import sagasManager from "Utils/sagasManager";
 import {
   LOGIN_USER,
-  getLoginUserSuccess
+  getLoginUserSuccess,
+  getLoginUserError,
+  sentToRegisterPage
 } from "Actions/login";
 import {
-  LOGIN_API_URL
+  LOGIN_API_URL,
+  HTTP_STATUS_FOR_SUCCESS,
+  LOGIN_RESPONSE_STATUS_FOR_SUCCESS,
+  LOGIN_RESPONSE_STATUS_FOR_WRONG_PASS,
+  LOGIN_RESPONSE_STATUS_FOR_WRONG_ID
 } from 'Constants/commonConstants';
 import {
   postCall
 } from "Constants/api";
 
-export function* loginAdmin(action) {
-  console.log('loginAdmin', action)
-  const data = yield call(postCall, LOGIN_API_URL, action.data, 'application/json; charset=utf-8')
-  if (data) {
-    console.log('data recieved', data)
-    yield put(getLoginUserSuccess(data))
+export function* loginUser(action) {
+  console.log('loginUser', action)
+  const data = yield call(postCall, LOGIN_API_URL, action.data)
+  const {
+    response,
+    httpStatus
+  } = data || {}
+  const {
+    message,
+    loginResponseStatus
+  } = response || {}
+  if (httpStatus === HTTP_STATUS_FOR_SUCCESS) {
+    if (loginResponseStatus === LOGIN_RESPONSE_STATUS_FOR_SUCCESS) {
+      yield put(getLoginUserSuccess(response))
+    } else if (loginResponseStatus === LOGIN_RESPONSE_STATUS_FOR_WRONG_PASS) {
+      yield put(getLoginUserError(response))
+    } else if (loginResponseStatus === LOGIN_RESPONSE_STATUS_FOR_WRONG_ID) {
+      yield put(sentToRegisterPage(response))
+    }
+  } else {
+    console.log("failed")
   }
-
 }
 
-sagasManager.addSagaToRoot(function* visaWatcher() {
+sagasManager.addSagaToRoot(function* userWatcher() {
   yield all([
-    takeLatest(LOGIN_USER, loginAdmin),
+    takeLatest(LOGIN_USER, loginUser),
   ]);
 });

@@ -11,7 +11,7 @@ export const getData = (url, params = {}) => {
     });
 };
 
-export const postCall = (url, data, contentType = 'any') => {
+export const postCall = (url, data, contentType = 'application/json') => {
     console.log('postCall', url, data, contentType)
     return new Promise((resolve, reject) => {
         fetch(`${url}`, {

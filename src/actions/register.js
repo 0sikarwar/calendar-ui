@@ -8,3 +8,18 @@ export const addNewUser = userData => {
         data: userData
     }
 }
+
+export const getRegisterUserSuccess = userData => {
+    console.log('getRegisterUserSuccess')
+    return {
+        type: GET_REGISTER_USER_SUCCESS,
+        data: userData
+    }
+}
+export const getRegisterUserError = userData => {
+    console.log('getRegisterUserError')
+    return {
+        type: GET_REGISTER_USER_ERROR,
+        data: userData
+    }
+}

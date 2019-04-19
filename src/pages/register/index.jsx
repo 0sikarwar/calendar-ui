@@ -1,7 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from "react-redux";
 
-export default class RegisterPage extends React.Component {
+import { addNewUser } from 'Actions/register'
+
+class RegisterPage extends React.Component {
 	constructor(props) {
 		super(props);
 
@@ -17,6 +20,35 @@ export default class RegisterPage extends React.Component {
 
 		this.handleChange = this.handleChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
+	}
+	componentDidMount() {
+		const { loginStatus, data } = this.props
+		const emailId = data && data.loginId
+		const { user } = this.state;
+		this.setState({
+			user: {
+				...user,
+				username: emailId
+			},
+			neededToLoad: true
+		})
+		let userData = {}
+		if (typeof (Storage) !== "undefined") {
+			userData = JSON.parse(sessionStorage.getItem("userData"));
+		}
+		const { loginId } = userData || {}
+		if (loginId) {
+			this.setState({
+				neededToLoad: false
+			});
+			window.location = '/'
+		}
+	}
+	shouldComponentUpdate(nextProps, nextState) {
+		if (!this.state.neededToLoad) {
+			return false;
+		}
+		return true;
 	}
 
 	handleChange(event) {
@@ -36,13 +68,20 @@ export default class RegisterPage extends React.Component {
 		this.setState({ submitted: true });
 		const { user } = this.state;
 		console.log(user)
+		this.props.addNewUser({ userDocument: user });
 	}
 
 	render() {
 		const { user, submitted } = this.state;
+		const { loginStatus } = this.props
+
 		return (
 			<div className="pr-15 pl-15">
-				<h2>Register</h2>
+				<div className='flex flex-middle flex-between'>
+					<h2>Register</h2>
+					<Link to="/login" className="btn btn-link"> LogIn</Link>
+				</div>
+
 				<form name="form" onSubmit={this.handleSubmit}>
 
 					<div className={'mb-15' + (submitted && !user.firstName ? ' has-error' : '')}>
@@ -53,19 +92,21 @@ export default class RegisterPage extends React.Component {
 						}
 					</div>
 
-					<div className={'mb-15' + (submitted && !user.lastName ? ' has-error' : '')}>
+					<div className='mb-15'>
 						<label htmlFor="lastName" className="form-label" >Last Name</label>
 						<input type="text" className="form-input" name="lastName" value={user.lastName} onChange={this.handleChange} />
-						{submitted && !user.lastName &&
-							<div className="help-block">Last Name is required</div>
-						}
 					</div>
 
-					<div className={'mb-15' + (submitted && !user.username ? ' has-error' : '')}>
-						<label htmlFor="username" className="form-label" >Username</label>
+					<div className={'mb-15' + (submitted && !user.username || loginStatus === 'exists' ? ' has-error' : '')}>
+						<label htmlFor="username" className="form-label" >Email Id</label>
 						<input type="text" className="form-input" name="username" value={user.username} onChange={this.handleChange} />
 						{submitted && !user.username &&
-							<div className="help-block">Username is required</div>
+							<div className="help-block">Email id is required</div>
+						}
+						{loginStatus === 'exists' &&
+							<div className='help-block'>
+								Already have a id login now
+							</div>
 						}
 					</div>
 
@@ -79,7 +120,7 @@ export default class RegisterPage extends React.Component {
 
 					<div className="mb-15">
 						<button className="btn btn-primary">Register</button>
-						<Link to="/login" className="btn btn-link">Cancel</Link>
+						<Link to="/" className="btn btn-link">Cancel</Link>
 					</div>
 
 				</form>
@@ -87,3 +128,18 @@ export default class RegisterPage extends React.Component {
 		);
 	}
 }
+
+const mapStateToProps = ({ loginUser }) => {
+	console.log('mapStateToProps', loginUser)
+	return {
+		loginStatus: loginUser.loginStatus,
+		data: loginUser.data
+	}
+}
+
+export default connect(
+	mapStateToProps,
+	{
+		addNewUser
+	}
+)(RegisterPage)

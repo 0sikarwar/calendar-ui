@@ -2,6 +2,7 @@ import React, { Component } from "react"; //eslint-disable-line
 import { connect } from "react-redux";
 
 import "Sagas/loginUser";
+import "Sagas/registerUser";
 
 class Startup extends Component {
   componentDidMount() {
