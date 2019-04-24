@@ -23,7 +23,11 @@ import {
 
 export function* registerUser(action) {
   console.log('registerUser', action)
-  const data = yield call(postCall, REGISTER_API_URL, action.data)
+  const {
+    userData,
+    onRegisterFailed
+  } = action.data
+  const data = yield call(postCall, REGISTER_API_URL, userData)
   const {
     response,
     httpStatus
@@ -37,6 +41,7 @@ export function* registerUser(action) {
       yield put(getRegisterUserSuccess(response))
     } else if (loginResponseStatus === REGISTER_RESPONSE_STATUS_EXISTING_ID) {
       yield put(getRegisterUserError(response))
+      onRegisterFailed(response)
     }
   } else {
     console.log("failed")

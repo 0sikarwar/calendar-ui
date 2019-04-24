@@ -20,7 +20,6 @@
     "redux-logger": "^3.0.6",
     "redux-saga": "^0.16.0",
     "redux": "^4.0.1",
-    "uuid": "^3.3.2",
     "winston": "^3.1.0"
   },
   "devDependencies": {
@@ -75,8 +74,8 @@
     "workbox-webpack-plugin": "3.6.2"
   },
   "scripts": {
-    "start": "node scripts/start.js",
-    "build:qa": "PUBLIC_URL=//qa2.cltpstatic.com/  node scripts/build.js ",
+    "start": "PUBLIC_URL=https://demo8858260.mockable.io node scripts/start.js",
+    "build:qa": "PUBLIC_URL=/  node scripts/build.js ",
     "build:dev": "node scripts/build.js ",
     "build": "PUBLIC_URL=/ node scripts/build.js ",
     "test": "node scripts/test.js",

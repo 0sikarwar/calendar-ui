@@ -8,7 +8,8 @@ import {
     GET_REGISTER_USER_ERROR
 } from "Actions/register";
 export default (state = {
-    loginStatus: 'false'
+    loginStatus: 'false',
+    submission: 'failed'
 
 }, action) => {
     let newState;
@@ -16,7 +17,9 @@ export default (state = {
         newState = {
             ...state,
             loginStatus: true,
-            data: action.data
+            data: action.data,
+            submission: 'success'
+
         }
         if (typeof (Storage) !== "undefined") {
             sessionStorage.setItem("userData", JSON.stringify(action.data));
@@ -26,20 +29,22 @@ export default (state = {
         window.alert("Wrong PASSWORD try again")
         newState = {
             ...state,
-            loginStatus: 'auth'
+            loginStatus: 'auth',
+            submission: 'failed'
         }
     } else if (action.type === NOT_REGISTERED_USER) {
         newState = {
             ...state,
             loginStatus: 'invalid',
-            data: action.data
+            data: action.data,
+            submission: 'failed'
         }
     } else if (action.type === GET_REGISTER_USER_SUCCESS) {
-        console.log("Asdfgh")
         newState = {
             ...state,
             loginStatus: true,
-            data: action.data
+            data: action.data,
+            submission: 'success'
         }
         if (typeof (Storage) !== "undefined") {
             sessionStorage.setItem("userData", JSON.stringify(action.data));
@@ -48,7 +53,8 @@ export default (state = {
     } else if (action.type === GET_REGISTER_USER_ERROR) {
         newState = {
             ...state,
-            loginStatus: 'exists'
+            loginStatus: 'exists',
+            submission: 'failed'
         }
         console.log('new State', newState);
     }

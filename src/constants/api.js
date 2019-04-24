@@ -1,6 +1,10 @@
 export const getData = (url, params = {}) => {
     return new Promise((resolve, reject) => {
         fetch(`${url}`).then((response) => {
+            if (res.status >= 400) {
+                reject({});
+                return;
+            }
             response.json().then((data) => {
                 resolve(data);
             });
@@ -22,6 +26,10 @@ export const postCall = (url, data, contentType = 'application/json') => {
             body: JSON.stringify(data)
         }).then(res => {
             console.log('response', res)
+            if (res.status >= 400) {
+                reject({});
+                return;
+            }
             res.json().then((data) => {
                 resolve(data);
             });

@@ -1,5 +1,6 @@
-export const LOGIN_API_URL = 'http://demo8858260.mockable.io/login'
-export const REGISTER_API_URL = 'https://demo8858260.mockable.io/register'
+export const LOGIN_API_URL = `${process.env.PUBLIC_URL}/login`
+export const REGISTER_API_URL = `${process.env.PUBLIC_URL}/register`
+
 export const HTTP_STATUS_FOR_SUCCESS = 'SUCCESS'
 export const LOGIN_RESPONSE_STATUS_FOR_SUCCESS = 'SUCCESS'
 export const LOGIN_RESPONSE_STATUS_FOR_WRONG_PASS = 'UN_AUTHORIZED'

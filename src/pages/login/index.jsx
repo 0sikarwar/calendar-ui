@@ -7,36 +7,38 @@ import { loginUser } from 'Actions/login'
 class LoginPage extends React.Component {
   constructor(props) {
     super(props);
+    let userData = {}
     this.state = {
       username: '',
       password: '',
       submitted: false,
       neededToLoad: true
     };
-  }
-  componentDidMount() {
-    let userData = {}
+
     if (typeof (Storage) !== "undefined") {
       userData = JSON.parse(sessionStorage.getItem("userData"));
     }
     const { loginId } = userData || {}
     if (loginId) {
-      this.setState({
-        neededToLoad: false
-      });
-      window.location = '/'
+      props.history.push('/')
     }
-  }
-  shouldComponentUpdate(nextProps, nextState) {
-    if (!this.state.neededToLoad) {
-      return false;
-    }
-    return true;
   }
 
   handleChange = (e) => {
     const { name, value } = e.target;
     this.setState({ [name]: value });
+  }
+  onLoginFailed = () => {
+    console.log('onALoginFailed')
+    const { loginStatus, submission } = this.props
+    if (submission === 'failed') {
+      if (loginStatus === 'auth') {
+        this.passwordRef.focus();
+      }
+      if (loginStatus === 'invalid') {
+        this.userNameRef.focus();
+      }
+    }
   }
 
   handleSubmit = (e) => {
@@ -44,7 +46,8 @@ class LoginPage extends React.Component {
     this.setState({ submitted: true });
     const { username, password } = this.state;
     if (username && password) {
-      this.props.loginUser({ userDocument: { loginId: username, password: password } })
+      const userData = { userDocument: { loginId: username, password: password } }
+      this.props.loginUser({ userData, onLoginFailed: this.onLoginFailed })
     }
   }
 
@@ -61,7 +64,7 @@ class LoginPage extends React.Component {
 
           <div className={'mb-15' + (submitted && !username || loginStatus === 'invalid' ? ' has-error' : '')}>
             <label htmlFor="username" className="form-label">Email Id</label>
-            <input type="text" className="form-input" name="username" value={username} onChange={this.handleChange} />
+            <input type="email" ref={(ref) => { this.userNameRef = ref }} className="form-input" name="username" value={username} onChange={this.handleChange} />
             {loginStatus === 'invalid' &&
               <div className='help-block'>
                 Not a Registered user
@@ -75,7 +78,7 @@ class LoginPage extends React.Component {
 
           <div className={'mb-15' + ((submitted && !password) || loginStatus === 'auth' ? ' has-error' : '')}>
             <label htmlFor="password" className="form-label">Password</label>
-            <input type="password" className="form-input" name="password" value={password} onChange={this.handleChange} autoFocus={loginStatus === 'auth' ? true : false} />
+            <input ref={(ref) => { this.passwordRef = ref }} type="password" className="form-input" name="password" value={password} onChange={this.handleChange} />
             {submitted && !password &&
               <div className="help-block">Password is required</div>
             }
@@ -95,7 +98,8 @@ class LoginPage extends React.Component {
 const mapStateToProps = ({ loginUser }) => {
   console.log('mapStateToProps', loginUser)
   return {
-    loginStatus: loginUser.loginStatus
+    loginStatus: loginUser.loginStatus,
+    submission: loginUser.submission
   }
 }
 
