@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 
 import { addNewUser } from 'Actions/register'
 import { validatePassword } from 'Utils'
+import ToolTip from 'Components/toolTipModal'
 
 class RegisterPage extends React.Component {
 	constructor(props) {
@@ -33,7 +34,7 @@ class RegisterPage extends React.Component {
 		const { name, value } = event.target;
 		const { user } = this.state;
 		let { strengthPass } = this.state;
-		if (name === 'password' && value.length > 4) {
+		if (name === 'password') {
 			strengthPass = validatePassword(value, user.firstName, user.loginId)
 		}
 		this.setState({
@@ -80,7 +81,7 @@ class RegisterPage extends React.Component {
 		const { loginStatus } = this.props
 
 		return (
-			<div className="pr-15 pl-15">
+			<div className="pr-15 pl-15 col-1 hCenter pr max-wt-500">
 				<div className='flex flex-middle flex-between'>
 					<h2>Register</h2>
 					<Link to="/login" className="btn btn-link"> LogIn</Link>
@@ -91,9 +92,9 @@ class RegisterPage extends React.Component {
 					<div className={'mb-15' + (submitted && !user.firstName ? ' has-error' : '')}>
 						<label htmlFor="firstName" className="form-label" >First Name</label>
 						<input type="text" className="form-input" name="firstName" value={user.firstName} onChange={this.handleChange} />
-						{submitted && !user.firstName &&
+						<If condition={submitted && !user.firstName}>
 							<div className="help-block">First Name is required</div>
-						}
+						</If>
 					</div>
 
 					<div className='mb-15'>
@@ -104,30 +105,37 @@ class RegisterPage extends React.Component {
 					<div className={'mb-15' + (submitted && !user.loginId || loginStatus === 'exists' ? ' has-error' : '')}>
 						<label htmlFor="loginId" className="form-label" >Email Id</label>
 						<input type="email" className="form-input" name="loginId" value={user.loginId} onChange={this.handleChange} />
-						{submitted && !user.loginId &&
+						<If condition={submitted && !user.loginId}>
 							<div className="help-block">Email id is required</div>
-						}
-						{loginStatus === 'exists' &&
+						</If>
+						<If condition={loginStatus === 'exists'}>
 							<div className='help-block'>
 								Already have a id login now
 							</div>
-						}
+						</If>
 					</div>
 
-					<div className={'mb-15' + (submitted && !user.password ? ' has-error' : '')}>
+					<div className={'mb-15 pr ' + (submitted && !user.password ? ' has-error' : '')}>
 						<label htmlFor="password" className="form-label">Password</label>
 						<input ref={(ref) => { this.passwordRef = ref }} type="password" className="form-input" name="password" value={user.password} onChange={this.handleChange} onFocus={this.passwordFocused} />
-						{submitted && !user.password &&
+						<If condition={submitted && !user.password}>
 							<div className="help-block">Password is required</div>
-						}
-						{
-							showStrengthBar &&
-							<div className="strengthBarContainer mt-5" style={{ width: `${this.passwordRef.clientWidth}px` }}>
+						</If>
+						<If condition={showStrengthBar && user.password}>
+
+							<div className="strengthBarContainer mt-5">
 								<div className={`strengthBar ${strengthPass} br-20`}>
 
 								</div>
 							</div>
-						}
+						</If>
+						<If condition={user.password && strengthPass === 'weak'}>
+							<ToolTip>
+								<div className='fs-12 '>
+									Alteast 1 lowercase, 1 specialchar, 1 digit
+							</div>
+							</ToolTip>
+						</If>
 					</div>
 
 					<div className="mb-15">

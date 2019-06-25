@@ -3,5 +3,8 @@
         "activityBar.background": "#2D1482",
         "titleBar.activeBackground": "#3F1CB6",
         "titleBar.activeForeground": "#FCFBFE"
-    }
+    },
+    "editor.formatOnPaste": true,
+    "editor.formatOnSave": true,
+    "editor.formatOnType": true
 }

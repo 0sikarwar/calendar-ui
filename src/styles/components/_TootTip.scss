@@ -1,0 +1,75 @@
+$border-width : 10px;
+$toolTip-border-color: red;
+$tip-postion-from-left: 20px;
+$absolute-position-value: 98%;
+
+.tootTip-container {
+    position: absolute;
+    left: 50%;
+    top: 110%;
+    z-index: 2;
+}
+
+.toolTip-body {
+    height: 55px;
+    width: 150px;
+    background-color: white;
+    border: $toolTip-border-color 1px solid;
+    padding: 5px
+}
+
+.triangle,
+.triangle-bottom,
+.triangle-left,
+.triangle-top,
+.triangle-right {
+    width: 0px;
+    height: 0px;
+    background-color: transparent;
+    border: $border-width solid transparent;
+    position: absolute;
+}
+
+.triangle-bottom {
+    border-top-color: $toolTip-border-color;
+    top: $absolute-position-value;
+    left: $tip-postion-from-left;
+}
+
+.triangle-left {
+    border-right-color: $toolTip-border-color;
+    right: $absolute-position-value;
+}
+
+.triangle-top {
+    border-bottom-color: $toolTip-border-color;
+    bottom: $absolute-position-value;
+    left: $tip-postion-from-left;
+}
+
+.triangle-right {
+    border-left-color: $toolTip-border-color;
+    left: $absolute-position-value;
+}
+
+.triangle-inner,
+.triangle-inner-top,
+.triangle-inner-bottom {
+    width: 0px;
+    height: 0px;
+    background-color: transparent;
+    border: $border-width - 1px solid transparent;
+    position: absolute;
+}
+
+.triangle-inner-top {
+    border-bottom-color: white;
+    bottom: $absolute-position-value;
+    left: $tip-postion-from-left + 1px;
+}
+
+.triangle-inner-bottom {
+    border-top-color: white;
+    top: $absolute-position-value;
+    left: $tip-postion-from-left + 1px;
+}

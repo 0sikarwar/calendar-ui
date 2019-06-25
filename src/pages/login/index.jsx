@@ -55,7 +55,7 @@ class LoginPage extends React.Component {
     const { username, password, submitted } = this.state;
     const { loginStatus } = this.props
     return (
-      <div className="pr-15 pl-15">
+      <div className="pr-15 pl-15 col-1 hCenter pr max-wt-500">
         <div className='flex flex-middle flex-between'>
           <h2>Login</h2>
           <Link to="/register" className="btn btn-link">Register</Link>
