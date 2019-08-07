@@ -3,14 +3,28 @@ import { connect } from "react-redux";
 
 import "Sagas/loginUser";
 import "Sagas/registerUser";
+import { ContextProvider } from "./appContex";
+import ErrorBoundary from "./ErrorBoundary";
 
 class Startup extends Component {
+  state = {}
   componentDidMount() {
     // dispatch actions on application start
   }
+  updateState = (key,value) => {
+    this.setState({
+      [key]: value   
+    })
+  }
 
   render() {
-    return this.props.children;
+    return (
+      <ErrorBoundary>
+        <ContextProvider value={{state:this.state,updateValue:this.updateState}}>
+          {this.props.children}
+        </ContextProvider>
+      </ErrorBoundary>
+    )
   }
 }
 

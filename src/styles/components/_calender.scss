@@ -1,0 +1,45 @@
+.calender {
+    border-collapse: collapse;
+    margin: 10px;
+}
+
+.calender tr td {
+    border: 1px solid #00000075;
+    text-align: center;
+    height: 50px;
+    width: 50px;
+    vertical-align: center;
+
+    &:hover {
+        background-color: #d7e3f5;
+        color: #000000
+    }
+}
+
+.calender tr th {
+    border: 1px solid #000000;
+    text-align: center;
+    height: 50px;
+    width: 50px;
+    vertical-align: center;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 18px;
+    background-color: #3c82eb;
+    color: #ffffff;
+}
+
+.today {
+    background-color: #1f7efa;
+    color: #ffffff;
+}
+.arrow{
+    text-align: center;
+}
+.calenderHeading{
+    background-color: #01060e;
+    color: #ffffff;    
+}
+.spacialDay {
+    background-color: #bb2c08;
+    color: #ffffff;
+}
