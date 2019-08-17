@@ -33,7 +33,10 @@
     background-color: #337ab7;
     border-color: #2e6da4;
 }
-
+.btn-secondary {
+    background-color: #b4b6b8;
+    border-color: #a1a3a5;
+}
 .btn {
     display: inline-block;
     padding: 6px 12px;
@@ -47,6 +50,10 @@
     background-image: none;
     border: 1px solid transparent;
     border-radius: 4px;
+}
+.btn-small {
+    padding: 2px 4px;
+    font-size: 10px;
 }
 
 .btn-link {

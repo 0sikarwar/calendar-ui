@@ -49,11 +49,15 @@ class calender extends React.Component {
 		return additionalClass
 		
 	}
-
+	handleDateClick(day) {
+		const { onDateClick } = this.props
+		const { currentMonth, currentYear } = this.state
+		onDateClick(day, currentMonth, currentYear)
+	}
 	createCalender(month, year) {
 		const {
 			cellClassName,
-			rowClassName
+			rowClassName,
 		} = this.props
 		month = parseInt(month);
 		year = parseInt(year)
@@ -63,15 +67,13 @@ class calender extends React.Component {
 		for (let i = 0; i < 6; i++) {
 			let children = []
 			for (let j = 0; j < 7; j++) {
-				if (i == 0 && j < firstDay) {
+				//for empty cell
+				if ((i == 0 && j < firstDay) || day > numberOfDays) {
 					children.push(<td className={cellClassName}key={'' + i + j}></td>);
 				} else {
-					if (day > numberOfDays) {
-						children.push(<td className={cellClassName}key={'' + i + j}></td>);
-					} else {
+					//to classes for dates with specail day or today
 						const additionalClass = this.getAdditionClassForCell(day)
-						children.push(<td key={'' + i + j} className={cellClassName + additionalClass}>{day++}</td>)
-					}
+					children.push(<td key={'' + i + j} className={cellClassName + additionalClass} onClick={this.handleDateClick.bind(this,day)}>{day++}</td>)
 				}
 			}
 			table.push(<tr className={rowClassName}key={'' + i}>{children}</tr>)
@@ -169,7 +171,8 @@ calender.defaultProps = {
 	arrowClassName: '',
 	containerClassName: '',
 	spacialDays: '',// fromat : mmm dd yyyy, dd mmm yyyy,yyyy dd mmm,yyyy mmm dd, mm/dd/yyyy 
-	spacialDayClassName:''
+	spacialDayClassName: '',
+	onDateClick:()=>{ }
 }
 
 const mapStateToProps = ({ }) => {
