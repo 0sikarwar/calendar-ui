@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 
 class HomePage extends React.Component {
   state = {
+    loggedIn: false,
     user: {
       firstName: '',
       lastName: ''
@@ -14,25 +15,41 @@ class HomePage extends React.Component {
     if (typeof (Storage) !== "undefined") {
       userData = JSON.parse(sessionStorage.getItem("userData"));
     }
+    const { loginId } = userData || {}
+    if (loginId) {      
+      this.setState({
+        loggedIn: true,
+        user: { ...userData }
+      })
+    } else {      
+      sessionStorage.removeItem("userData")
+    }
+  }
+
+  logOutUser = () => {
     this.setState({
-      user: { ...userData }
+      loggedIn: false,
+      user: {
+        firstName: '',
+        lastName: ''
+      }
     })
+  sessionStorage.removeItem("userData")
   }
 
   render() {
     console.log(this.state);
-    const { user } = this.state
-    const { loginId } = user || {}
+    const { user, loggedIn } = this.state
     return (
       <div>
-        {!loginId ? (
+        {!loggedIn ? (
           <h2>
             <Link to="/login" className="btn btn-link">Log In</Link>
             <Link to="/register" className="btn btn-link">Register</Link>
           </h2>)
           :
           (<h1>
-            welcome {user.firstName} {user.lastName}
+            welcome {user.firstName} {user.lastName} <span onClick={this.logOutUser} className="btn btn-link">Log out</span>
           </h1>)}
       </div>
 

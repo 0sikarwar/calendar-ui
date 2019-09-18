@@ -1,7 +1,8 @@
 import {
     GET_LOGIN_USER_SUCCESS,
     GET_LOGIN_USER_ERROR,
-    NOT_REGISTERED_USER
+    NOT_REGISTERED_USER,
+    RESET_LOGIN_USER
 } from "Actions/login";
 import {
     GET_REGISTER_USER_SUCCESS,
@@ -57,6 +58,11 @@ export default (state = {
             submission: 'failed'
         }
         console.log('new State', newState);
+    } else if (action.type === RESET_LOGIN_USER) {
+        newState = {
+            ...state,
+            loginStatus: false,
+        }
     }
     return newState || state;
 }

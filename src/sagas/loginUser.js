@@ -32,22 +32,20 @@ export function* loginUser(action) {
     } = action.data
     const data = yield call(postCall, LOGIN_API_URL, userData)
     const {
-      response,
-      httpStatus
-    } = data || {}
-    const {
+      httpStatus,
       message,
       loginResponseStatus
-    } = response || {}
+    } = data || {}
+    console.log(data)
     if (httpStatus === HTTP_STATUS_FOR_SUCCESS) {
       if (loginResponseStatus === LOGIN_RESPONSE_STATUS_FOR_SUCCESS) {
-        yield put(getLoginUserSuccess(response))
+        yield put(getLoginUserSuccess(data.userData))
       } else if (loginResponseStatus === LOGIN_RESPONSE_STATUS_FOR_WRONG_PASS) {
-        yield put(getLoginUserError(response))
-        onLoginFailed(response);
+        yield put(getLoginUserError(data.userData))
+        onLoginFailed(data.userData);
       } else if (loginResponseStatus === LOGIN_RESPONSE_STATUS_FOR_WRONG_ID) {
-        yield put(sentToRegisterPage(response))
-        onLoginFailed(response);
+        yield put(sentToRegisterPage(data.userData))
+        onLoginFailed(data.userData);
       }
     } else {
       console.log("failed")

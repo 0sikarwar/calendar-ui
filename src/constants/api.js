@@ -27,7 +27,7 @@ export const postCall = (url, data, contentType = 'application/json') => {
         }).then(res => {
             console.log('response', res)
             if (res.status >= 400) {
-                reject({});
+                reject({res});
                 return;
             }
             res.json().then((data) => {

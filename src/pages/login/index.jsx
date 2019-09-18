@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from "react-redux";
 
-import { loginUser } from 'Actions/login'
+import { loginUser, resetLoginUser } from 'Actions/login'
 
 class LoginPage extends React.Component {
   constructor(props) {
@@ -50,6 +50,9 @@ class LoginPage extends React.Component {
       this.props.loginUser({ userData, onLoginFailed: this.onLoginFailed })
     }
   }
+  resetLogin = () => {
+    this.props.resetLoginUser()
+  }
 
   render() {
     const { username, password, submitted } = this.state;
@@ -58,7 +61,7 @@ class LoginPage extends React.Component {
       <div className="pr-15 pl-15 col-1 hCenter pr max-wt-500">
         <div className='flex flex-middle flex-between'>
           <h2>Login</h2>
-          <Link to="/register" className="btn btn-link">Register</Link>
+          <Link to="/register" onClick={this.resetLogin} className="btn btn-link">Register</Link>
         </div>
         <form name="form" onSubmit={this.handleSubmit}>
 
@@ -68,7 +71,7 @@ class LoginPage extends React.Component {
             {loginStatus === 'invalid' &&
               <div className='help-block'>
                 Not a Registered user
-            <Link to="/register" className="btn btn-link"> Register now</Link>
+            <Link to="/register" onClick={this.resetLogin} className="btn btn-link"> Register now</Link>
               </div>
             }
             {submitted && !username &&
@@ -106,6 +109,7 @@ const mapStateToProps = ({ loginUser }) => {
 export default connect(
   mapStateToProps,
   {
-    loginUser
+    loginUser,
+    resetLoginUser
   }
 )(LoginPage)

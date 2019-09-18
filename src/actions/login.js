@@ -2,6 +2,7 @@ export const LOGIN_USER = 'LOGIN_USER';
 export const GET_LOGIN_USER_SUCCESS = 'LOGIN_USER_SUCCESS';
 export const GET_LOGIN_USER_ERROR = 'LOGIN_USER_ERROR';
 export const NOT_REGISTERED_USER = 'NOT_REGISTERED_USER'
+export const RESET_LOGIN_USER = 'RESET_LOGIN_USER';
 
 export const loginUser = userData => {
     return {
@@ -33,3 +34,7 @@ export const sentToRegisterPage = userData => {
         data: userData
     }
 }
+
+export const resetLoginUser = () => ({
+    type: RESET_LOGIN_USER
+})

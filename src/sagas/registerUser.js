@@ -29,19 +29,16 @@ export function* registerUser(action) {
   } = action.data
   const data = yield call(postCall, REGISTER_API_URL, userData)
   const {
-    response,
-    httpStatus
-  } = data || {}
-  const {
-    message,
+    httpStatus,
+    msg,
     loginResponseStatus
-  } = response || {}
+  } = data || {}
   if (httpStatus === HTTP_STATUS_FOR_SUCCESS) {
     if (loginResponseStatus === REGISTER_RESPONSE_STATUS_FOR_SUCCESS) {
-      yield put(getRegisterUserSuccess(response))
+      yield put(getRegisterUserSuccess(data.userData))
     } else if (loginResponseStatus === REGISTER_RESPONSE_STATUS_EXISTING_ID) {
-      yield put(getRegisterUserError(response))
-      onRegisterFailed(response)
+      yield put(getRegisterUserError(data))
+      onRegisterFailed(data)
     }
   } else {
     console.log("failed")
