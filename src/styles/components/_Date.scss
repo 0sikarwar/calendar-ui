@@ -1,0 +1,55 @@
+.DateRangePickerInput_arrow {
+    display: none !important;
+}
+.DateRangePickerInput_arrow_svg {
+    display: none !important;
+}
+.DateRangePicker {
+    input {
+        height: 40px;
+        border: 1px solid #528aea;
+        border-radius: 5px;
+        font-size: 16px;
+        color: #528aea;
+        font-family: Proximanova-Semibold;
+        &:focus {
+            #startDate {
+                border: 1px solid #528aea;
+            }
+            #endDate { 
+                border: 1px solid #528aea;
+            }
+        }
+        &#startDate {
+            border-right: none;
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+        &#endDate {
+            border-left: none;
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+        }
+    }
+}
+.SingleDatePicker {
+    width: 200px;
+    margin-right: 20px;
+    input {
+        height: 40px;
+        width: 200px;
+        border: 1px solid #a8b6cd;
+        border-radius: 5px;
+        font-size: 16px;
+        color: #528aea;
+        font-family: Proximanova-Semibold;
+        &:focus {
+            #startDate {
+                border: 1px solid #528aea;
+            }
+            #endDate { 
+                border: 1px solid #528aea;
+            }
+        }
+    }
+}
