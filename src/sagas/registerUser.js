@@ -30,7 +30,6 @@ export function* registerUser(action) {
   const data = yield call(postCall, REGISTER_API_URL, userData)
   const {
     httpStatus,
-    msg,
     loginResponseStatus
   } = data || {}
   if (httpStatus === HTTP_STATUS_FOR_SUCCESS) {
